@@ -1,28 +1,49 @@
 package ar.custom.keycloak.auth;
 
-import org.keycloak.authentication.ConfigurableAuthenticatorFactory;
+import org.keycloak.Config;
+import org.keycloak.authentication.Authenticator;
+import org.keycloak.authentication.AuthenticatorFactory;
 import org.keycloak.models.AuthenticationExecutionModel;
+import org.keycloak.models.KeycloakSession;
+import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.provider.ProviderConfigProperty;
 
+import java.util.Collections;
 import java.util.List;
 
-public class PaymentBlockedAuthenticatorFactory implements ConfigurableAuthenticatorFactory {
+public class PaymentBlockedAuthenticatorFactory implements AuthenticatorFactory {
 
     public static final String PROVIDER_ID = "payment-blocked-authenticator";
+    private static final PaymentBlockedAuthenticator SINGLETON = new PaymentBlockedAuthenticator();
+
+    @Override
+    public String getId() {
+        return PROVIDER_ID;
+    }
 
     @Override
     public String getDisplayType() {
-        return "Payment & Blocked Check";
+        return "Payment Blocked Check";
+    }
+
+    @Override
+    public String getHelpText() {
+        return "Bloquea el acceso si el usuario tiene los atributos 'blocked' o 'paymentRequired' en true.";
     }
 
     @Override
     public String getReferenceCategory() {
-        return "login";
+        return "condition";
     }
 
     @Override
     public boolean isConfigurable() {
         return false;
+    }
+
+    @Override
+    public AuthenticationExecutionModel.Requirement[] getRequirementChoices() {
+        return REQUIREMENT_CHOICES;
     }
 
     @Override
@@ -32,21 +53,25 @@ public class PaymentBlockedAuthenticatorFactory implements ConfigurableAuthentic
 
     @Override
     public List<ProviderConfigProperty> getConfigProperties() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
-    public AuthenticationExecutionModel.Requirement[] getRequirementChoices() {
-        return REQUIREMENT_CHOICES;
+    public Authenticator create(KeycloakSession session) {
+        return SINGLETON;
+    }
+
+    // USAMOS EL NOMBRE COMPLETO PARA EVITAR ERRORES DE RESOLUCIÓN
+    @Override
+    public void init(Config.Scope config) {
+        // No borrar este método, es obligatorio por la interfaz
     }
 
     @Override
-    public String getHelpText() {
-        return "Verifica si el usuario tiene pagos pendientes o está bloqueado.";
+    public void postInit(KeycloakSessionFactory factory) {
     }
 
     @Override
-    public <C> C getConfig() {
-        return null;
+    public void close() {
     }
 }
