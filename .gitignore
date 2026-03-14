@@ -1,0 +1,20 @@
+# Archivos de compilación de Java
+*.class
+*.jar
+*.war
+
+# Carpetas de compilación
+/target/
+/out/
+
+# Archivos de IDEs
+.idea/
+*.iml
+.vscode/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de configuración locales
+*.env
