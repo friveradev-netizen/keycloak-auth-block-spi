@@ -1,6 +1,5 @@
 # Archivos de compilación de Java
 *.class
-*.jar
 *.war
 
 # Carpetas de compilación
