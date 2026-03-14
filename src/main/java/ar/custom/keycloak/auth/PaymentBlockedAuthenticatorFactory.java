@@ -28,7 +28,7 @@ public class PaymentBlockedAuthenticatorFactory implements AuthenticatorFactory 
 
     @Override
     public String getHelpText() {
-        return "Bloquea el acceso si el usuario tiene los atributos 'blocked' o 'paymentRequired' en true.";
+        return "Bloquea el acceso si el usuario tiene 'paymentRequired' en true.";
     }
 
     @Override
@@ -61,10 +61,8 @@ public class PaymentBlockedAuthenticatorFactory implements AuthenticatorFactory 
         return SINGLETON;
     }
 
-    // USAMOS EL NOMBRE COMPLETO PARA EVITAR ERRORES DE RESOLUCIÓN
     @Override
     public void init(Config.Scope config) {
-        // No borrar este método, es obligatorio por la interfaz
     }
 
     @Override

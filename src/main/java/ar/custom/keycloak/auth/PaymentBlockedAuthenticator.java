@@ -16,20 +16,11 @@ public class PaymentBlockedAuthenticator implements Authenticator {
             return;
         }
 
-        String blocked = user.getFirstAttribute("blocked");
         String paymentRequired = user.getFirstAttribute("paymentRequired");
-
-        if ("true".equalsIgnoreCase(blocked)) {
-            context.failure(AuthenticationFlowError.INVALID_USER,
-                    Response.status(Response.Status.BAD_REQUEST)
-                            .entity("{\"error\": \"invalid_grant\", \"error_description\": \"Account blocked\"}")
-                            .build());
-            return;
-        }
 
         if ("true".equalsIgnoreCase(paymentRequired)) {
             context.failure(AuthenticationFlowError.INVALID_USER,
-                    Response.status(Response.Status.BAD_REQUEST)
+                    Response.status(Response.Status.PAYMENT_REQUIRED)
                             .entity("{\"error\": \"invalid_grant\", \"error_description\": \"Payment Required\"}")
                             .build());
             return;
