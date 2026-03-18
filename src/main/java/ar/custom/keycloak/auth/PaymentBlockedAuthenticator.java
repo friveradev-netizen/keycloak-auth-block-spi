@@ -16,7 +16,7 @@ public class PaymentBlockedAuthenticator implements Authenticator {
             return;
         }
 
-        String paymentRequired = user.getFirstAttribute("paymentRequired");
+        String paymentRequired = user.getFirstAttribute("payment_required");
 
         if ("true".equalsIgnoreCase(paymentRequired)) {
             context.failure(AuthenticationFlowError.INVALID_USER,
